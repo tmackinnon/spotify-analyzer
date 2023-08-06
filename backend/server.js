@@ -38,14 +38,17 @@ const apiRouter = require('./routes/api');
 //use routers
 app.use('/api', apiRouter);
 
+//
+//SPOTIFY AUTHENTICATION//
+//
 //code pulled from spotify web-api-examples repo//
 app.get('/login', (req, res) => {
-
   //create key-value & set as cookie
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
-  const scope = 'user-read-private user-read-email';
+  //scope is info/access wanted from api
+  const scope = 'user-read-private user-read-email user-top-read';
 
   res.redirect('https://accounts.spotify.com/authorize?' +
   querystring.stringify({
@@ -61,7 +64,7 @@ app.get('/login', (req, res) => {
 //code pulled from spotify web-api-examples repo//
 app.get('/callback', (req, res) => {
 
-  //pull out token code and state and new cookie value provided by spotify's authentication
+  //pull out code, state and new cookie value provided by spotify's authentication
   // if none provided make variables null
   const code = req.query.code || null;
   const state = req.query.state || null;
@@ -89,7 +92,7 @@ app.get('/callback', (req, res) => {
       json: true
     };
 
-    //post request to get profile data 
+    //post request to get profile data
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
