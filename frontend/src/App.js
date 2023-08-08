@@ -6,16 +6,16 @@ import Login from './components/Login';
 
 export default function App() {
 
-  const tokens = new URLSearchParams(window.location.hash.substring(1));
-  const access = tokens.get('access_token');
-  const refresh = tokens.get('refresh_token');
+  const params = new URLSearchParams(window.location.search)
+  const code = params.get('code');
+  console.log('code', code);
   
   return (
     <div className="App">
       <header>
         <h1>Spotify Analyzer</h1>
       </header>
-      {access ? <Dashboard accessToken={access} refreshToken={refresh}/> : <Login/>}
+      {code ? <Dashboard code={code}/> : <Login/>}
     </div>
   );
 }

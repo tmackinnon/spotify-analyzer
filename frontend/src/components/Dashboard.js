@@ -1,16 +1,19 @@
 import TopSongs from "./TopSongs";
+import SpotifyWebApi from "spotify-web-api-node";
+import useCode from "./useCode";
+import axios from "axios";
 
 export default function Dashboard(props) {
 
-  //remove tokens from URL
-  window.location.hash = '';
+  const code = props.code;
+  const accessToken = useCode(code);
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <h2>Access Token: {props.accessToken}</h2>
-      <h2>Refresh Token: {props.refreshToken}</h2>
-      <TopSongs accessToken={props.accessToken} refreshToken={props.refreshToken}/>
+      <h2>Code: {props.code}</h2>
+      <h3>Access token: {accessToken}</h3>
+      {/* <TopSongs accessToken={props.accessToken}/> */}
     </div>
   )
 }
