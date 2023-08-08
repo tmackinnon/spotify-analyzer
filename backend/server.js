@@ -5,9 +5,9 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require("cors");
-const querystring = require('node:querystring');
+// const querystring = require('node:querystring');
 const cookieParser = require('cookie-parser');
-const request = require('request');
+// const request = require('request');
 const SpotifyWebApi = require("spotify-web-api-node")
 
 //establish key for cookies
@@ -26,31 +26,31 @@ app.use(express.json()); // populates req.body
 app.use(cookieParser());
 
 //helper function
-const generateRandomString = function(length) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+// const generateRandomString = function(length) {
+//   let text = '';
+//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
+//   for (let i = 0; i < length; i++) {
+//     text += possible.charAt(Math.floor(Math.random() * possible.length));
+//   }
+//   return text;
+// };
 
 //import routers
-const apiRouter = require('./routes/api');
+// const apiRouter = require('./routes/api');
 //use routers
-app.use('/api', apiRouter);
+// app.use('/api', apiRouter);
 
 //
 //SPOTIFY AUTHENTICATION//
 //
 app.post("/login", (req, res) => {
-  const code = req.body.code
+  const code = req.body.code;
   const spotifyApi = new SpotifyWebApi({
     redirectUri: process.env.REDIRECT_URI,
     clientId: process.env.CLIENTID,
     clientSecret: process.env.CLIENT_SECRET,
-  })
+  });
 
   spotifyApi
     .authorizationCodeGrant(code)
@@ -59,15 +59,15 @@ app.post("/login", (req, res) => {
         accessToken: data.body.access_token,
         refreshToken: data.body.refresh_token,
         expiresIn: data.body.expires_in,
-      })
+      });
     })
     .catch(err => {
-      res.sendStatus(400)
+      console.log(err);
+      res.sendStatus(400);
     })
 })
-
 
 
 app.listen(port, () => {
   console.log(`app is listening on port ${port}`);
-})
+});
