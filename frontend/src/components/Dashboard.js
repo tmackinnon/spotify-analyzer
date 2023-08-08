@@ -13,7 +13,7 @@ export default function Dashboard(props) {
       <h1>Dashboard</h1>
       <h2>Code: {props.code}</h2>
       <h3>Access token: {accessToken}</h3>
-      {/* <TopSongs accessToken={props.accessToken}/> */}
+      {/* <TopSongs accessToken={accessToken}/> */}
     </div>
   )
 }

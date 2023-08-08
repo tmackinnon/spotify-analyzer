@@ -23,6 +23,25 @@ export default function useCode(code) {
       });
   }, [code]);
 
+  useEffect(() => {
+    //only run this once we have a refreshToken & expiresIn 
+    if (!refreshToken || !expiresIn) return;
+
+    //setInterval so acess token is refreshed a min before expiry everytime
+    const refreshInterval = setInterval(() => {
+      axios.post('http://localhost:8080/refresh', {
+        refreshToken,
+      })
+        .then(res => {
+          setAccessToken(res.data.accessToken);
+          setExpiresIn(res.data.expiresIn);
+        });
+    }, (expiresIn - 60) * 1000);
+
+    //clean up settimeout
+    return () => clearInterval(refreshInterval);
+
+  }, [refreshToken, expiresIn]);
 
   return accessToken;
 

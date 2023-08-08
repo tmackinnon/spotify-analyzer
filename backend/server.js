@@ -25,22 +25,6 @@ app.use(express.urlencoded({extended: false})); // HTML forms, jQuery's serializ
 app.use(express.json()); // populates req.body
 app.use(cookieParser());
 
-//helper function
-// const generateRandomString = function(length) {
-//   let text = '';
-//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-//   for (let i = 0; i < length; i++) {
-//     text += possible.charAt(Math.floor(Math.random() * possible.length));
-//   }
-//   return text;
-// };
-
-//import routers
-// const apiRouter = require('./routes/api');
-//use routers
-// app.use('/api', apiRouter);
-
 //
 //SPOTIFY AUTHENTICATION//
 //
@@ -61,8 +45,32 @@ app.post("/login", (req, res) => {
         expiresIn: data.body.expires_in,
       });
     })
-    .catch(err => {
-      console.log(err);
+    .catch(error => {
+      console.log(error);
+      res.sendStatus(400);
+    })
+})
+
+app.post("/refresh", (req, res) => {
+  const refreshToken = req.body.refreshToken;
+  const spotifyApi = new SpotifyWebApi({
+    redirectUri: process.env.REDIRECT_URI,
+    clientId: process.env.CLIENTID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: refreshToken
+  });
+
+  spotifyApi
+    .refreshAccessToken()
+    .then(data => {
+      console.log('The access token has been refreshed')
+      res.json({
+        accessToken: data.body.access_token,
+        expiresIn: data.body.expires_in,
+      });
+    })
+    .catch(error => {
+      console.log(error);
       res.sendStatus(400);
     })
 })
