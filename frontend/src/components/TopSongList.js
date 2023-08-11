@@ -1,8 +1,9 @@
+import './TopSongList.scss';
 import { useEffect, useState } from 'react';
-import SpotifyWebApi from 'spotify-web-api-node';
-import Song from './Song';
+import SongItem from './SongItem';
+import Table from 'react-bootstrap/Table'
 
-export default function TopSongs(props) {
+export default function TopSongList(props) {
 
   const [topSongs, setTopSongs] = useState([])
   const spotifyApi = props.spotifyApi;
@@ -24,10 +25,11 @@ export default function TopSongs(props) {
       });
   }, [accessToken, spotifyApi]);
 
-  const songs = topSongs.map((song) => {
+  const songs = topSongs.map((song, index) => {
     return (
-      <Song
+      <SongItem
         key={song.id}
+        trackNum={index+1}
         name={song.name}
         artist={song.artists[0].name}
       />
@@ -35,9 +37,19 @@ export default function TopSongs(props) {
   })
 
   return (
-    <div>
-      <h1>Your Top Songs This Month:</h1>
-      {songs}
+    <div className='top-song-list'>
+      <h1>My Top Songs</h1>
+      <Table striped bordered hover variant='dark' responsive>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Album</th>
+            <th>Length</th>
+          </tr>
+        </thead>
+        {songs}
+      </Table>
     </div>
   )
 }

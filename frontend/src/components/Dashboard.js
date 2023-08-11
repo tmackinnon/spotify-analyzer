@@ -1,7 +1,7 @@
-import TopSongs from "./TopSongs";
+import './Dashboard.scss';
+import TopSongList from "./TopSongList";
 import SpotifyWebApi from "spotify-web-api-node";
 import useCode from "./useCode";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 const spotifyApi = new SpotifyWebApi({
@@ -28,11 +28,10 @@ export default function Dashboard(props) {
   }, [accessToken]);
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <h1>{name}</h1>
-      <img src={displayPic} alt='user' width="50%" height="50%"></img>
-      <TopSongs accessToken={accessToken} spotifyApi={spotifyApi}/>
+    <div className='dashboard'>
+      <h1>{name}'s Dashboard</h1>
+      {/* <img src={displayPic} alt='user' width="50%" height="50%"></img> */}
+      <TopSongList accessToken={accessToken} spotifyApi={spotifyApi}/>
     </div>
   );
 }
