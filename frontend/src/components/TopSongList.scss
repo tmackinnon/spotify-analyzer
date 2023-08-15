@@ -1,4 +1,34 @@
 .top-song-list {
-  width: 600px;
   margin: 50px;
+  width: 800px;
+
+  .table-responsive {
+    overflow-y: auto;
+    height: 400px;
+  }
+
+  .top-song-list-table {
+
+    
+
+    td {
+      color: rgb(172, 172, 172);
+      vertical-align: middle;
+    
+    }
+    #title {
+      display: flex;
+
+      img {
+        padding-right: 20px;
+      }
+
+      p {
+        margin: 0px;
+      }
+      #name {
+        color: white;
+      }
+    }
+  }
 }

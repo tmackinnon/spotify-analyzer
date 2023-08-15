@@ -13,7 +13,7 @@ export default function TopSongList(props) {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
     spotifyApi.getMyTopTracks({
-      limit: 10,
+      limit: 20,
       time_range: 'short_term'
     })
       .then(function(data) {
@@ -30,16 +30,19 @@ export default function TopSongList(props) {
       <SongItem
         key={song.id}
         trackNum={index+1}
+        image={song.album.images[2].url}
         name={song.name}
         artist={song.artists[0].name}
+        album={song.album.name}
+        duration={song.duration_ms}
       />
     )
   })
 
   return (
     <div className='top-song-list'>
-      <h1>My Top Songs</h1>
-      <Table striped bordered hover variant='dark' responsive>
+      <h1>My Recent Favourite Songs</h1>
+      <Table striped bordered hover variant='dark' responsive className='top-song-list-table'>
         <thead>
           <tr>
             <th>#</th>

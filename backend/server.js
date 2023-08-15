@@ -19,7 +19,7 @@ const port = 8080;
 //middleware
 app.use(morgan('dev'));
 app.use(cors({
-  origin: ['http://localhost:3002'],
+  origin: ['http://localhost:3000'],
 }));
 app.use(express.urlencoded({extended: false})); // HTML forms, jQuery's serialize()
 app.use(express.json()); // populates req.body
