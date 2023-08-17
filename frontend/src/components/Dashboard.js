@@ -1,4 +1,3 @@
-import './Dashboard.scss';
 import TopSongList from "./TopSongList";
 import SpotifyWebApi from "spotify-web-api-node";
 import useCode from "./useCode";
@@ -10,11 +9,9 @@ const spotifyApi = new SpotifyWebApi({
 
 export default function Dashboard(props) {
 
-  const [name, setName] = useState('')
-  const [displayPic, setDisplayPic] = useState('')
-
   const code = props.code;
   const accessToken = useCode(code);
+  // const setName = props.setName();
 
   useEffect(() => {
     if (!accessToken) return;
@@ -22,16 +19,15 @@ export default function Dashboard(props) {
     spotifyApi.getMe()
     .then(data => {
       // console.log(data)
-      setName(data.body.display_name);
-      setDisplayPic(data.body.images[1].url);
+      // setName(data.body.display_name);
     })
   }, [accessToken]);
 
   return (
-    <div className='dashboard'>
-      <h1>{name}'s Dashboard</h1>
-      {/* <img src={displayPic} alt='user' width="50%" height="50%"></img> */}
+    <div className='dashboard bg-success-subtle d-flex'>
+      {/* <h1 className='fw-bold m-3'>{name}'s Dashboard</h1> */}
       <TopSongList accessToken={accessToken} spotifyApi={spotifyApi}/>
+      {/* <TopSongList accessToken={accessToken} spotifyApi={spotifyApi}/> */}
     </div>
   );
 }

@@ -9,16 +9,16 @@ export default function SongItem(props) {
   return (
     <tbody>
       <tr>
-        <td>{props.trackNum}</td>
-        <td id='title'>
-          <img src={props.image} alt="album cover" height={64}></img>
+        <td className="text-center">{props.trackNum}</td>
+        <td className='d-flex'>
+          <img src={props.image} alt='album cover' height={64} className="pe-3 align-middle"></img>
           <div>
-            <p id='name'>{props.name}</p>
-            <p>{props.artist}</p>
+            <p className="fw-semibold m-0">{props.name}</p>
+            <p className="m-0">{props.artist}</p>
           </div>
         </td>
         <td>{props.album}</td>
-        <td>{convertMilliseconds(props.duration)}</td>
+        <td className='text-end'>{convertMilliseconds(props.duration)}</td>
       </tr>
     </tbody>
   )
