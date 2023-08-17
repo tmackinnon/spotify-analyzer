@@ -7,20 +7,17 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 export default function TopSongList(props) {
 
   const [topSongs, setTopSongs] = useState([]);
-  const [clickedButtons, setClickedButtons] = useState({
-    short_term: true,
-    medium_term: false,
-    long_term: false
-  });
+  const [clickedButton, setClickedButton] = useState('short_term');
   const spotifyApi = props.spotifyApi;
   const accessToken = props.accessToken
+  const timeRanges = [{title: '1 month', range: 'short_term'}, {title: '6 months', range: 'medium_term'}, {title: 'Overall', range: 'long_term'}];
 
   useEffect(() => {
     if (!accessToken) return;
     spotifyApi.setAccessToken(accessToken);
     spotifyApi.getMyTopTracks({
       limit: 20,
-      time_range: 'short_term'
+      time_range: clickedButton
     })
       .then(function(data) {
         setTopSongs(data.body.items);
@@ -29,22 +26,16 @@ export default function TopSongList(props) {
       .catch(function(err) {
         console.log('Something went wrong!', err);
       });
-  }, [accessToken, spotifyApi]);
+  }, [accessToken, spotifyApi, clickedButton]);
 
   const updateTimeRange = function(time_range) {
-    const buttons = {
-      short_term: false,
-      medium_term: false,
-      long_term: false
-    };
-    buttons[time_range] = true;
-    setClickedButtons(buttons);
+    setClickedButton(time_range);
   }
 
-  const buttons = Object.keys(clickedButtons).map((button, index) => {
+  const buttons = timeRanges.map((button, index) => {
     return (
-        <ToggleButton className='rounded-0' key={index} id={button} value={index} onClick={() => {updateTimeRange(button)}}>
-          {button}
+        <ToggleButton className='rounded-0 btn-secondary' key={index} id={button.title} value={index} onClick={() => {updateTimeRange(button.range)}}>
+          {button.title}
         </ToggleButton>
     )
   })
@@ -64,22 +55,28 @@ export default function TopSongList(props) {
   })
 
   return (
-    <div className='w-50 m-5 h-50'>
-      <h1 className='fw-bold'>Top Songs</h1>
-      <ToggleButtonGroup type="radio" name="time-range-options" defaultValue={0}>
-        {buttons}
-      </ToggleButtonGroup>
-      <Table striped bordered hover responsive className='shadow'>
-        <thead>
-          <tr>
-            <th className='text-center'>#</th>
-            <th>Title</th>
-            <th>Album</th>
-            <th className='text-end'>Length</th>
-          </tr>
-        </thead>
-        {songs}
-      </Table>
-    </div>
+    <>
+      <div className='m-5'>
+        <h1 className='fw-bold'>Top Songs</h1>
+        <ToggleButtonGroup type="radio" name="time-range-options" defaultValue={0}>
+          {buttons}
+        </ToggleButtonGroup>
+        <div className='shadow' style={{ height: '600px', overflowY: 'auto', width: '800px'}}>
+          <Table striped bordered hover className='m-0'>
+            <thead>
+              <tr>
+                <th className='text-center'>#</th>
+                <th>Title</th>
+                <th>Album</th>
+                <th className='text-end pe-3'>Length</th>
+              </tr>
+            </thead>
+            <tbody>
+              {songs}
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    </>
   )
 }
