@@ -8,7 +8,7 @@ export default function TopSongList(props) {
   const [topSongs, setTopSongs] = useState([]);
   const [clickedButton, setClickedButton] = useState('short_term');
   const spotifyApi = props.spotifyApi;
-  const accessToken = props.accessToken
+  const accessToken = props.accessToken;
 
   useEffect(() => {
     if (!accessToken) return;
@@ -29,7 +29,7 @@ export default function TopSongList(props) {
   const songs = topSongs.map((song, index) => {
     return (
       <SongItem
-        key={song.id}
+        key={song.uri}
         trackNum={index+1}
         image={song.album.images[2].url}
         name={song.name}
@@ -44,8 +44,8 @@ export default function TopSongList(props) {
     <>
       <h1 className='fw-bold'>Top Songs</h1>
       <TimeRangeToggle setClickedButton={setClickedButton} type={'songs'}/>
-      <div className='shadow' style={{ height: '600px', overflowY: 'auto'}}>
-        <Table striped bordered hover className='m-0'>
+      <div className='shadow' style={{ height: '700px', overflowY: 'auto'}}>
+        <Table striped bordered className='m-0'>
           <thead>
             <tr>
               <th className='text-center'>#</th>

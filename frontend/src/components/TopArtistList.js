@@ -43,8 +43,8 @@ export default function TopArtistList(props) {
     <>
       <h1 className='fw-bold'>Top Artists</h1>
       <TimeRangeToggle setClickedButton={setClickedButton} type={'artists'}/>
-      <div className='shadow' style={{ height: '600px', overflowY: 'auto'}}>
-        <Table striped bordered hover className='m-0'>
+      <div className='shadow' style={{ height: '700px', overflowY: 'auto'}}>
+        <Table striped bordered className='m-0'>
           <thead>
             <tr>
               <th className='text-center'>#</th>
