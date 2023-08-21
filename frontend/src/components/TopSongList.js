@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import SongItem from './SongItem';
 import Table from 'react-bootstrap/Table';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import TimeRangeToggle from './TimeRangeToggle';
 
 export default function TopSongList(props) {
 
@@ -10,7 +9,6 @@ export default function TopSongList(props) {
   const [clickedButton, setClickedButton] = useState('short_term');
   const spotifyApi = props.spotifyApi;
   const accessToken = props.accessToken
-  const timeRanges = [{title: '1 month', range: 'short_term'}, {title: '6 months', range: 'medium_term'}, {title: 'Overall', range: 'long_term'}];
 
   useEffect(() => {
     if (!accessToken) return;
@@ -27,18 +25,6 @@ export default function TopSongList(props) {
         console.log('Something went wrong!', err);
       });
   }, [accessToken, spotifyApi, clickedButton]);
-
-  const updateTimeRange = function(time_range) {
-    setClickedButton(time_range);
-  }
-
-  const buttons = timeRanges.map((button, index) => {
-    return (
-        <ToggleButton className='rounded-0 btn-secondary' key={index} id={button.title} value={index} onClick={() => {updateTimeRange(button.range)}}>
-          {button.title}
-        </ToggleButton>
-    )
-  })
 
   const songs = topSongs.map((song, index) => {
     return (
@@ -58,9 +44,7 @@ export default function TopSongList(props) {
     <>
       <div className='m-5'>
         <h1 className='fw-bold'>Top Songs</h1>
-        <ToggleButtonGroup type="radio" name="time-range-options" defaultValue={0}>
-          {buttons}
-        </ToggleButtonGroup>
+        <TimeRangeToggle setClickedButton={setClickedButton} type={'songs'} defaultValue={'songs-0'}/>
         <div className='shadow' style={{ height: '600px', overflowY: 'auto', width: '800px'}}>
           <Table striped bordered hover className='m-0'>
             <thead>
