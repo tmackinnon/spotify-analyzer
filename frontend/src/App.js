@@ -3,6 +3,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import { useState } from 'react';
 import Nav from './components/Nav';
+import useCode from './components/useCode';
 
 
 export default function App() {
@@ -12,7 +13,6 @@ export default function App() {
   
   return (
     <div className="App">
-      <Nav/>
       {code ? <Dashboard code={code}/> : <Login/>}
     </div>
   );

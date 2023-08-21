@@ -9,8 +9,6 @@ export default function TimeRangeToggle(props) {
     {title: 'Overall', range: 'long_term'}
   ];
 
-  console.log(props.defaultValue)
-
   const updateTimeRange = function(time_range) {
     props.setClickedButton(time_range);
   }
