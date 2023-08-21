@@ -16,17 +16,15 @@ export default function TimeRangeToggle(props) {
   }
 
   const buttons = timeRanges.map((button, index) => {
-    const uniqueID = `${props.type}-${index}`
-    
     return (
-        <ToggleButton className='rounded-0 btn-secondary' key={uniqueID} id={uniqueID} value={uniqueID} onClick={() => {updateTimeRange(button.range)}}>
+        <ToggleButton className='rounded-0 btn-secondary' key={`${props.type}-${index}`} id={`${props.type}-${button.title}`} value={`${props.type}-${index}`} onClick={() => {updateTimeRange(button.range)}}>
           {button.title}
         </ToggleButton>
     )
   })
 
   return(
-    <ToggleButtonGroup type="radio" name="time-range-options" defaultValue={props.defaultValue}>
+    <ToggleButtonGroup type="radio" name={`time-range-${props.type}`} defaultValue={`${props.type}-0`}>
       {buttons}
     </ToggleButtonGroup>
   )

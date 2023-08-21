@@ -42,24 +42,22 @@ export default function TopSongList(props) {
 
   return (
     <>
-      <div className='m-5'>
-        <h1 className='fw-bold'>Top Songs</h1>
-        <TimeRangeToggle setClickedButton={setClickedButton} type={'songs'} defaultValue={'songs-0'}/>
-        <div className='shadow' style={{ height: '600px', overflowY: 'auto', width: '800px'}}>
-          <Table striped bordered hover className='m-0'>
-            <thead>
-              <tr>
-                <th className='text-center'>#</th>
-                <th>Title</th>
-                <th>Album</th>
-                <th className='text-end pe-3'>Length</th>
-              </tr>
-            </thead>
-            <tbody>
-              {songs}
-            </tbody>
-          </Table>
-        </div>
+      <h1 className='fw-bold'>Top Songs</h1>
+      <TimeRangeToggle setClickedButton={setClickedButton} type={'songs'}/>
+      <div className='shadow' style={{ height: '600px', overflowY: 'auto'}}>
+        <Table striped bordered hover className='m-0'>
+          <thead>
+            <tr>
+              <th className='text-center'>#</th>
+              <th>Title</th>
+              <th>Album</th>
+              <th className='text-end pe-3'>Length</th>
+            </tr>
+          </thead>
+          <tbody>
+            {songs}
+          </tbody>
+        </Table>
       </div>
     </>
   )
