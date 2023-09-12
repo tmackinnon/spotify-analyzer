@@ -19,4 +19,4 @@ Spotify Analyzer uses Spotify's API and the [Spotify Web API Node library](https
 - Add create playlist functionality
 
 ## Screenshot
-![Dashboard]()
+![Dashboard](https://github.com/tmackinnon/spotify-analyzer/blob/master/docs/Screenshot%202023-09-12%20at%2010.51.33%20AM.png?raw=true)
